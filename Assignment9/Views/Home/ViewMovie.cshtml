@@ -1,0 +1,62 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Here is a list of the entered movies";
+}
+
+@model IEnumerable<Assignment9.Models.EnterMovie>
+<!-- create movie list table -->
+<div>
+    <p>Entered Movies:</p>
+
+    <table id="t01">
+        <tr>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th>Director</th>
+            <th>Rating</th>
+            <th>Edited</th>
+            <th>Lent To</th>
+            <th>Notes</th>
+        </tr>
+
+        <!-- loop through each movie row -->
+
+        @foreach (Assignment9.Models.EnterMovie x in Model)
+        {
+            if (x.Title != "Independence Day")
+            {
+                <tr>
+                    <td>@x.Category</td>
+                    <td>@x.Title</td>
+                    <td>@x.Year</td>
+                    <td>@x.Director</td>
+                    <td>@x.Rating</td>
+                    @if (x.Edited == true)
+                    {
+                        <td>Yes</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>@x.LentTo</td>
+                    <td>@x.Notes</td>
+                    <!--Added a button to update that specific movie-->
+                    <td><a asp-action="Update" asp-route-movieId="@x.MovieId">Update</a></td>
+                    <!--Added a button to delete that specific movie-->
+                    <td>
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="movieId" value="@x.MovieId" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+</div>
+
